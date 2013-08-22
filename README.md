@@ -1,0 +1,1 @@
+Tinymce editor and its angular-ui directive
