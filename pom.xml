@@ -10,7 +10,7 @@
 
 	<groupId>nz.ac.auckland.common</groupId>
 	<artifactId>common-tinymce</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 	<packaging>jar</packaging>
 
 	<name>Tinymce Common</name>
@@ -22,6 +22,6 @@
 		<url>https://github.com/uoa-group-applications/common-tinymce</url>
 		<connection>scm:git:https://github.com/uoa-group-applications/common-tinymce.git</connection>
 		<developerConnection>scm:git:git@github.com:uoa-group-applications/common-tinymce.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>common-tinymce-1.2</tag>
 	</scm>
 </project>
