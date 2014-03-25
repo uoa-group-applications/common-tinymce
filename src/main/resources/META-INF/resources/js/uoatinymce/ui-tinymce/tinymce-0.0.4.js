@@ -1,5 +1,5 @@
 /**
- * Binds a TinyMCE widget to <textarea> elements.
+ * Binds a TinyMCE widget to <textarea> elements v0.0.4.
  */
 angular.module('ui.tinymce', [])
   .value('uiTinymceConfig', {})
@@ -50,6 +50,10 @@ angular.module('ui.tinymce', [])
                 updateView();
               }
             });
+            ed.on('SetAttrib', function (e) {
+              ed.save();
+              updateView();
+            });            
             if (expression.setup) {
               scope.$eval(expression.setup);
               delete expression.setup;
