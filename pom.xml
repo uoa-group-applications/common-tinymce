@@ -10,7 +10,7 @@
 
 	<groupId>nz.ac.auckland.lmz.javascript</groupId>
 	<artifactId>javascript-tinymce</artifactId>
-	<version>1.2</version>
+	<version>1.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>javascript-tinymce</name>
@@ -22,6 +22,6 @@
 		<url>https://github.com/uoa-group-applications/javascript-tinymce</url>
 		<connection>scm:git:https://github.com/uoa-group-applications/javascript-tinymce.git</connection>
 		<developerConnection>scm:git:git@github.com:uoa-group-applications/javascript-tinymce.git</developerConnection>
-		<tag>javascript-tinymce-1.2</tag>
+		<tag>HEAD</tag>
 	</scm>
 </project>
