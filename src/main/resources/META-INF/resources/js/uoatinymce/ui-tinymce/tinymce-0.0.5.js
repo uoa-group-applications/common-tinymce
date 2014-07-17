@@ -1,5 +1,5 @@
 /**
- * Binds a TinyMCE widget to <textarea> elements v0.0.4.
+ * Binds a TinyMCE widget to <textarea> elements.
  */
 angular.module('ui.tinymce', [])
   .value('uiTinymceConfig', {})
@@ -7,15 +7,17 @@ angular.module('ui.tinymce', [])
     uiTinymceConfig = uiTinymceConfig || {};
     var generatedIds = 0;
     return {
+      priority: 10,
       require: 'ngModel',
       link: function (scope, elm, attrs, ngModel) {
         var expression, options, tinyInstance,
           updateView = function () {
             ngModel.$setViewValue(elm.val());
-            if (!scope.$$phase) {
+            if (!scope.$root.$$phase) {
               scope.$apply();
             }
           };
+
         // generate an ID if not present
         if (!attrs.id) {
           attrs.$set('id', 'uiTinymce' + generatedIds++);
@@ -26,6 +28,13 @@ angular.module('ui.tinymce', [])
         } else {
           expression = {};
         }
+
+        // make config'ed setup method available
+        if (expression.setup) {
+          var configSetup = expression.setup;
+          delete expression.setup;
+        }
+
         options = {
           // Update model when calling setContent (such as from the source editor popup)
           setup: function (ed) {
@@ -50,13 +59,16 @@ angular.module('ui.tinymce', [])
                 updateView();
               }
             });
+            // Fixed by UOA
             ed.on('SetAttrib', function (e) {
               ed.save();
               updateView();
-            });            
-            if (expression.setup) {
-              scope.$eval(expression.setup);
-              delete expression.setup;
+            });              
+            ed.on('blur', function(e) {
+                elm.blur();
+            });
+            if (configSetup) {
+              configSetup(ed);
             }
           },
           mode: 'exact',
@@ -68,7 +80,6 @@ angular.module('ui.tinymce', [])
           tinymce.init(options);
         });
 
-
         ngModel.$render = function() {
           if (!tinyInstance) {
             tinyInstance = tinymce.get(attrs.id);
@@ -77,6 +88,14 @@ angular.module('ui.tinymce', [])
             tinyInstance.setContent(ngModel.$viewValue || '');
           }
         };
+
+        scope.$on('$destroy', function() {
+          if (!tinyInstance) { tinyInstance = tinymce.get(attrs.id); }
+          if (tinyInstance) {
+            tinyInstance.remove();
+            tinyInstance = null;
+          }
+        });
       }
     };
   }]);
